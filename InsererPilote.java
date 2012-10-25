@@ -17,16 +17,17 @@ public class InsererPilote extends JFrame implements ActionListener  {
 		
 		private JPanel panel = new JPanel();	
 		private JButton bouton = new JButton("Insérer");
-		private JTextField idPilote = new JTextField("ID");
+		private JButton bouton2 = new JButton("Afficher les pilotes");
+//		private JTextField idPilote = new JTextField("ID");
 		private JTextField nomPilote = new JTextField("Nom");
 		private JTextField prenomPilote = new JTextField("Prénom");
 		private JLabel intitulePage = new JLabel("Insérer un pilote : ");
 
-		
-		
+				
 		public InsererPilote(){
 			
 			bouton.addActionListener(this);
+			bouton2.addActionListener(this);
 			
 			panel.setLayout(new GridLayout(5, 1));
 			
@@ -49,11 +50,11 @@ public class InsererPilote extends JFrame implements ActionListener  {
 			
 			Font police = new Font("Arial", Font.ITALIC, 12);
 			
-			idPilote.setFont(police);
-			idPilote.setPreferredSize(new Dimension(40, 30));
-			idPilote.setForeground(Color.black);
-			idPilote.setPreferredSize(new Dimension(300,30));
-			panel.add(idPilote);
+//			idPilote.setFont(police);
+//			idPilote.setPreferredSize(new Dimension(40, 30));
+//			idPilote.setForeground(Color.black);
+//			idPilote.setPreferredSize(new Dimension(300,30));
+//			panel.add(idPilote);
 			
 			nomPilote.setFont(police);
 			nomPilote.setPreferredSize(new Dimension(40, 30));
@@ -68,15 +69,24 @@ public class InsererPilote extends JFrame implements ActionListener  {
 			panel.add(prenomPilote);
 
 			panel.add(bouton);
+			panel.add(bouton2);
 			
 			this.setVisible(true);
 		}
 		
 		public void actionPerformed(ActionEvent e){
-		
-			System.out.println("Saisie : " + idPilote.getText() + " | " + nomPilote.getText() + " | " + prenomPilote.getText());
 			
-		}
-
+			FonctionBDD fbdd = new FonctionBDD();
+			
+			if (e.getSource() == bouton){
+				fbdd.requeteSQL(nomPilote.getText(), prenomPilote.getText());
+			}
+			
+			else if (e.getSource() == bouton2){
+				new AfficherPilotes();	
+			}
+		}			
 }
+
+// test git 2
 

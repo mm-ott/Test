@@ -33,7 +33,7 @@ public class FonctionBDD {
 		
 	}
 	
-	public void requeteSQL() {
+	public void requeteSQL(String nom, String prenom) {
 		
 		Connection connexion = connexionBDD(); 
 		Statement st = null;
@@ -43,18 +43,54 @@ public class FonctionBDD {
 		} 
 		
 		catch (SQLException e) {
-			System.out.println("ERREUR ! " + e);;
+			System.out.println("ERREUR ! " + e);
 		}
 		
-		String sql = "INSERT INTO Pilotes VALUES ('idPilote.getText()', 'nomPilote.getText()', 'prenomPilote.getText()');";
+		String sql = "INSERT INTO Pilotes(NomPilote, PrenomPilote) VALUES ('" + nom + "', '" + prenom + "');";
+		
+		System.out.println(sql + "\n");
+
 		try {
 			
-			ResultSet  rsRequete = st.executeQuery (sql) ;
-				rsRequete.close() ;   // Permet de libérer la mémoire utilisée.
-	
+			st.executeUpdate(sql) ;
 		} 
 		catch (SQLException e) {
 			System.out.println("Erreur dans la requête ! " + e);
 		}
 	}
+	
+	public ResultSet consulterPilote() {
+		Connection connexion = connexionBDD(); 
+		Statement st = null;
+		ResultSet rs = null;
+		
+		try {
+			st = connexion.createStatement();
+		} 
+		
+		catch (SQLException e) {
+			System.out.println("ERREUR ! " + e);
+		}
+		
+		try {
+			rs = st.executeQuery ("SELECT * FROM Pilotes;");
+			
+			System.out.println("Contenu de la table Pilotes : \n");
+			
+			while (rs.next()) {
+				String nom = rs.getString(2);
+				         System.out.print("Nom : " + nom + " | ") ;
+				String prenom = rs.getString(3);
+				         System.out.println("Prénom : " + prenom) ;
+				}
+				rs.close() ;
+			
+		} catch (SQLException e) {
+	
+			e.printStackTrace();
+		}
+		return rs;
+	}
 }
+
+// test git
